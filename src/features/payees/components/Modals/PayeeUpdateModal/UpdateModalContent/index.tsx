@@ -1,6 +1,5 @@
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import { PayeeFormFields } from "@/features/payees/components/Form/PayeeFormFields";
 import { usePayeeForm } from "@/features/payees/api/form/hooks/usePayeeForm";
 import type { SubmitHandler } from "react-hook-form";
