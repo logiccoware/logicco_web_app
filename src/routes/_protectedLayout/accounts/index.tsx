@@ -74,6 +74,7 @@ function RouteComponent() {
             });
           }}
           accountId={searchParams.accountUpdateModalId}
+          accountDefaultId={accountDefaultCookie?.id}
         />
       ) : null}
       {searchParams.accountDeleteModalId ? (
