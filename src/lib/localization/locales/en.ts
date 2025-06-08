@@ -22,6 +22,7 @@ export const enLocale = {
   "Common.errors.unknownError.ctaButton": "Try again",
   "Common.publicLayout.header.links.signIn": "Sign In",
   "Common.publicLayout.header.links.app": "App",
+  "Common.protectedLayout.navbars.title": "Navigation",
   "Common.protectedLayout.navbars.links.accounts": "Accounts",
   "Common.protectedLayout.navbars.links.payees": "Payees",
   "Common.protectedLayout.navbars.links.transactions": "Transactions",

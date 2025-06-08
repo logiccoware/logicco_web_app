@@ -16,7 +16,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Stack from "@mui/material/Stack";
 import { AppLogo } from "@/components/ui/AppLogo";
 import { PROTECTED_LAYOUT_DRAWER_ITEMS } from "./constants";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "@tanstack/react-router";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,7 +24,8 @@ import { MobileBottomNav } from "@/components/layouts/ProtectedLayout/MobileBott
 import { AppLink } from "@/components/ui/AppLink";
 import IconLogout from "@mui/icons-material/Logout";
 import { useLogout } from "@/features/auth/hooks/useLogout";
-import { DesktopAppbarTabs } from "./DesktopAppBarTabs";
+import { DesktopAppbarTabs } from "@/components/layouts/ProtectedLayout/DesktopAppBarTabs";
+import Typography from "@mui/material/Typography";
 
 const drawerWidth = 240;
 
@@ -33,7 +34,7 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
   const [isClosing, setIsClosing] = useState(false);
 
   const { pathname } = useLocation();
-  const t = useIntl();
+  const intl = useIntl();
 
   const { logout, isLoading: isLogoutLoading } = useLogout();
 
@@ -62,7 +63,13 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
   const drawer = (
     <Box>
       <Box sx={{ py: 2, pl: 1 }}>
-        <AppLogo />
+        {isMobile ? (
+          <Typography variant="h6">
+            <FormattedMessage id="Common.protectedLayout.navbars.title" />
+          </Typography>
+        ) : (
+          <AppLogo />
+        )}
       </Box>
       <Divider />
       <Stack justifyContent="space-between" direction="column">
@@ -76,7 +83,9 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
                 selected={pathname === item.href}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={t.formatMessage({ id: item.intlId })} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: item.intlId })}
+                />
               </ListItemButton>
             </ListItem>
           ))}
@@ -92,7 +101,7 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
                 <IconLogout />
               </ListItemIcon>
               <ListItemText
-                primary={t.formatMessage({
+                primary={intl.formatMessage({
                   id: "Common.protectedLayout.drawerButtons.logout",
                 })}
               />
@@ -123,9 +132,18 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
           >
             <MenuIcon />
           </IconButton>
-          <Stack width="100%" direction="row">
-            <DesktopAppbarTabs />
-          </Stack>
+          {isMobile ? (
+            <AppLink
+              to="/"
+              sx={{ textDecoration: "underline", color: "inherit" }}
+            >
+              <AppLogo />
+            </AppLink>
+          ) : (
+            <Stack width="100%" direction="row">
+              <DesktopAppbarTabs />
+            </Stack>
+          )}
         </Toolbar>
       </AppBar>
       <Box
