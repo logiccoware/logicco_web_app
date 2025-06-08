@@ -11,12 +11,14 @@ interface IProps {
   isOpen?: boolean;
   closeModal: () => void;
   accountId: string;
+  accountDefaultId?: string;
 }
 
 export function AccountUpdateModal({
   isOpen = false,
   closeModal,
   accountId,
+  accountDefaultId,
 }: IProps) {
   const intl = useIntl();
   const query = useQuery(accountQueryOptions(accountId));
@@ -35,6 +37,7 @@ export function AccountUpdateModal({
               <UpdateModalContent
                 closeModal={closeModal}
                 account={data.account}
+                accountDefaultId={accountDefaultId}
               />
             );
           }
