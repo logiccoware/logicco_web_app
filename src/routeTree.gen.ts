@@ -18,6 +18,7 @@ import { Route as PublicLayoutLoginIndexImport } from './routes/_publicLayout/lo
 import { Route as ProtectedLayoutTransactionsIndexImport } from './routes/_protectedLayout/transactions/index'
 import { Route as ProtectedLayoutSpendingsIndexImport } from './routes/_protectedLayout/spendings/index'
 import { Route as ProtectedLayoutPayeesIndexImport } from './routes/_protectedLayout/payees/index'
+import { Route as ProtectedLayoutAccountsIndexImport } from './routes/_protectedLayout/accounts/index'
 
 // Create/Update Routes
 
@@ -65,6 +66,13 @@ const ProtectedLayoutPayeesIndexRoute = ProtectedLayoutPayeesIndexImport.update(
   } as any,
 )
 
+const ProtectedLayoutAccountsIndexRoute =
+  ProtectedLayoutAccountsIndexImport.update({
+    id: '/accounts/',
+    path: '/accounts/',
+    getParentRoute: () => ProtectedLayoutRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -88,6 +96,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof ProtectedLayoutIndexImport
+      parentRoute: typeof ProtectedLayoutImport
+    }
+    '/_protectedLayout/accounts/': {
+      id: '/_protectedLayout/accounts/'
+      path: '/accounts'
+      fullPath: '/accounts'
+      preLoaderRoute: typeof ProtectedLayoutAccountsIndexImport
       parentRoute: typeof ProtectedLayoutImport
     }
     '/_protectedLayout/payees/': {
@@ -125,6 +140,7 @@ declare module '@tanstack/react-router' {
 
 interface ProtectedLayoutRouteChildren {
   ProtectedLayoutIndexRoute: typeof ProtectedLayoutIndexRoute
+  ProtectedLayoutAccountsIndexRoute: typeof ProtectedLayoutAccountsIndexRoute
   ProtectedLayoutPayeesIndexRoute: typeof ProtectedLayoutPayeesIndexRoute
   ProtectedLayoutSpendingsIndexRoute: typeof ProtectedLayoutSpendingsIndexRoute
   ProtectedLayoutTransactionsIndexRoute: typeof ProtectedLayoutTransactionsIndexRoute
@@ -132,6 +148,7 @@ interface ProtectedLayoutRouteChildren {
 
 const ProtectedLayoutRouteChildren: ProtectedLayoutRouteChildren = {
   ProtectedLayoutIndexRoute: ProtectedLayoutIndexRoute,
+  ProtectedLayoutAccountsIndexRoute: ProtectedLayoutAccountsIndexRoute,
   ProtectedLayoutPayeesIndexRoute: ProtectedLayoutPayeesIndexRoute,
   ProtectedLayoutSpendingsIndexRoute: ProtectedLayoutSpendingsIndexRoute,
   ProtectedLayoutTransactionsIndexRoute: ProtectedLayoutTransactionsIndexRoute,
@@ -156,6 +173,7 @@ const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '': typeof PublicLayoutRouteWithChildren
   '/': typeof ProtectedLayoutIndexRoute
+  '/accounts': typeof ProtectedLayoutAccountsIndexRoute
   '/payees': typeof ProtectedLayoutPayeesIndexRoute
   '/spendings': typeof ProtectedLayoutSpendingsIndexRoute
   '/transactions': typeof ProtectedLayoutTransactionsIndexRoute
@@ -165,6 +183,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '': typeof PublicLayoutRouteWithChildren
   '/': typeof ProtectedLayoutIndexRoute
+  '/accounts': typeof ProtectedLayoutAccountsIndexRoute
   '/payees': typeof ProtectedLayoutPayeesIndexRoute
   '/spendings': typeof ProtectedLayoutSpendingsIndexRoute
   '/transactions': typeof ProtectedLayoutTransactionsIndexRoute
@@ -176,6 +195,7 @@ export interface FileRoutesById {
   '/_protectedLayout': typeof ProtectedLayoutRouteWithChildren
   '/_publicLayout': typeof PublicLayoutRouteWithChildren
   '/_protectedLayout/': typeof ProtectedLayoutIndexRoute
+  '/_protectedLayout/accounts/': typeof ProtectedLayoutAccountsIndexRoute
   '/_protectedLayout/payees/': typeof ProtectedLayoutPayeesIndexRoute
   '/_protectedLayout/spendings/': typeof ProtectedLayoutSpendingsIndexRoute
   '/_protectedLayout/transactions/': typeof ProtectedLayoutTransactionsIndexRoute
@@ -184,14 +204,29 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/' | '/payees' | '/spendings' | '/transactions' | '/login'
+  fullPaths:
+    | ''
+    | '/'
+    | '/accounts'
+    | '/payees'
+    | '/spendings'
+    | '/transactions'
+    | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/' | '/payees' | '/spendings' | '/transactions' | '/login'
+  to:
+    | ''
+    | '/'
+    | '/accounts'
+    | '/payees'
+    | '/spendings'
+    | '/transactions'
+    | '/login'
   id:
     | '__root__'
     | '/_protectedLayout'
     | '/_publicLayout'
     | '/_protectedLayout/'
+    | '/_protectedLayout/accounts/'
     | '/_protectedLayout/payees/'
     | '/_protectedLayout/spendings/'
     | '/_protectedLayout/transactions/'
@@ -227,6 +262,7 @@ export const routeTree = rootRoute
       "filePath": "_protectedLayout.tsx",
       "children": [
         "/_protectedLayout/",
+        "/_protectedLayout/accounts/",
         "/_protectedLayout/payees/",
         "/_protectedLayout/spendings/",
         "/_protectedLayout/transactions/"
@@ -240,6 +276,10 @@ export const routeTree = rootRoute
     },
     "/_protectedLayout/": {
       "filePath": "_protectedLayout/index.tsx",
+      "parent": "/_protectedLayout"
+    },
+    "/_protectedLayout/accounts/": {
+      "filePath": "_protectedLayout/accounts/index.tsx",
       "parent": "/_protectedLayout"
     },
     "/_protectedLayout/payees/": {

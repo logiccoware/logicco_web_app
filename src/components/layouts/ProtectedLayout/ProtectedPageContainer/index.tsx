@@ -13,7 +13,7 @@ export function ProtectedPageContainer({
 }: PropsWithChildren<IProps>) {
   return (
     <Container>
-      <Stack sx={{ gap: 2, mt: 2 }}>
+      <Stack sx={{ gap: 2, mt: 4 }}>
         {title ? <Typography variant="h5">{title}</Typography> : null}
         {children}
       </Stack>

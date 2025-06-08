@@ -26,9 +26,7 @@ export const enLocale = {
   "Common.protectedLayout.navbars.links.payees": "Payees",
   "Common.protectedLayout.navbars.links.transactions": "Transactions",
   "Common.protectedLayout.navbars.links.categories": "Categories",
-  "Common.protectedLayout.headerMenu.dropdowns.applicationLabel": "Application",
-  "Common.protectedLayout.headerMenu.dropdowns.account": "Account Settings",
-  "Common.protectedLayout.headerMenu.dropdowns.logout": "Logout",
+  "Common.protectedLayout.drawerButtons.logout": "Logout",
   "App.welcomeMessage": "Welcome, ",
   "Auth.login.page.title": "Sign In",
   "Auth.login.page.subtitle":
@@ -94,6 +92,7 @@ export const enLocale = {
   "Accounts.form.fields.name.placeholder": "Enter account name",
   "Accounts.form.fields.currency.label": "Currency",
   "Accounts.form.fields.currency.placeholder": "Select currency",
+  "Accounts.form.fields.markDefault.label": "Mark as Default",
   "Accounts.form.saveButton": "Save",
   "Accounts.notifications.created": "Account Created.",
   "Accounts.notifications.updated": "Account Updated.",

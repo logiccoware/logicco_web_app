@@ -16,6 +16,7 @@ import { SnackbarProvider } from "notistack";
 import { IntlProvider } from "react-intl";
 import { locales } from "@/lib/localization/locales";
 import { PageLoading } from "@/components/ui/PageLoading";
+import { CookiesProvider } from "react-cookie";
 
 const queryClient = new QueryClient();
 
@@ -53,16 +54,18 @@ function InnerApp() {
 function App() {
   return (
     <IntlProvider defaultLocale="en" locale="en" messages={locales["en"]}>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <SnackbarProvider>
-              <InnerApp />
-            </SnackbarProvider>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+      <CookiesProvider defaultSetOptions={{ path: "/" }}>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={darkTheme}>
+              <CssBaseline />
+              <SnackbarProvider>
+                <InnerApp />
+              </SnackbarProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </AuthProvider>
+      </CookiesProvider>
     </IntlProvider>
   );
 }
