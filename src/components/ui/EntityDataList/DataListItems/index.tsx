@@ -2,6 +2,7 @@ import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { DataListItemMenu } from "@/components/ui/EntityDataList/DataListItemMenu";
 import type { IEntityDataList } from "@/components/ui/EntityDataList/types";
 import { DataListEmpty } from "@/components/ui/EntityDataList/DataListEmpty";
+import ListItemIcon from "@mui/material/ListItemIcon";
 
 interface IDataListItemsProps<T> {
   data: IEntityDataList<T>[];
@@ -36,6 +37,7 @@ export function DataListItems<T>({
               primary={item.primaryText}
             />
           </ListItemButton>
+          <ListItemIcon>{item.rightIcon ? item.rightIcon : null}</ListItemIcon>
         </ListItem>
       ))}
     </List>
