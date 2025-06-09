@@ -6,26 +6,22 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Stack from "@mui/material/Stack";
 import { AppLogo } from "@/components/ui/AppLogo";
-import { PROTECTED_LAYOUT_DRAWER_ITEMS } from "./constants";
-import { FormattedMessage, useIntl } from "react-intl";
+
+import { FormattedMessage } from "react-intl";
 import { useLocation } from "@tanstack/react-router";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { MobileBottomNav } from "@/components/layouts/ProtectedLayout/MobileBottomNav";
 import { AppLink } from "@/components/ui/AppLink";
-import IconLogout from "@mui/icons-material/Logout";
-import { useLogout } from "@/features/auth/hooks/useLogout";
+
 import { DesktopAppbarTabs } from "@/components/layouts/ProtectedLayout/DesktopAppBarTabs";
 import Typography from "@mui/material/Typography";
+import { DrawerItems } from "@/components/layouts/ProtectedLayout/DrawerItems";
 
 const drawerWidth = 240;
 
@@ -34,9 +30,6 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
   const [isClosing, setIsClosing] = useState(false);
 
   const { pathname } = useLocation();
-  const intl = useIntl();
-
-  const { logout, isLoading: isLogoutLoading } = useLogout();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -49,10 +42,6 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
   const handleDrawerTransitionEnd = () => {
     setIsClosing(false);
   };
-
-  async function handleLogout() {
-    await logout();
-  }
 
   const handleDrawerToggle = () => {
     if (!isClosing) {
@@ -72,43 +61,7 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
         )}
       </Box>
       <Divider />
-      <Stack justifyContent="space-between" direction="column">
-        <List>
-          {PROTECTED_LAYOUT_DRAWER_ITEMS.map((item) => (
-            <ListItem key={item.intlId} disablePadding>
-              <ListItemButton
-                component={AppLink}
-                onClick={handleDrawerClose}
-                to={item.href}
-                selected={pathname === item.href}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText
-                  primary={intl.formatMessage({ id: item.intlId })}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton
-              disabled={isLogoutLoading}
-              onClick={() => handleLogout()}
-            >
-              <ListItemIcon>
-                <IconLogout />
-              </ListItemIcon>
-              <ListItemText
-                primary={intl.formatMessage({
-                  id: "Common.protectedLayout.drawerButtons.logout",
-                })}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Stack>
+      <DrawerItems pathname={pathname} handleDrawerClose={handleDrawerClose} />
     </Box>
   );
 

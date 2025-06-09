@@ -113,6 +113,7 @@ export const enLocale = {
   "Categories.notifications.created": "Category Created.",
   "Categories.notifications.updated": "Category Updated.",
   "Categories.notifications.deleted": "Category Delete.",
+  "Categories.modals.manage.title": "Categories",
   "Categories.modals.create.title": "Create Category",
   "Categories.modals.createLeaf.title": "Create Subcategory",
   "Categories.modals.update.title": "Update Category",
