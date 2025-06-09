@@ -16,7 +16,6 @@ export function CategoryFormFields({ form, rootCategoryName }: IProps) {
     <Stack gap={2}>
       {rootCategoryName ? (
         <TextField
-          autoFocus
           label={intl.formatMessage({
             id: "Categories.form.fields.parentCategory.label",
           })}
@@ -31,7 +30,6 @@ export function CategoryFormFields({ form, rootCategoryName }: IProps) {
         render={({ field }) => (
           <TextField
             {...field}
-            autoFocus
             label={intl.formatMessage({
               id: "Categories.form.fields.name.label",
             })}
