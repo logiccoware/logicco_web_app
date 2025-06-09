@@ -59,7 +59,7 @@ function App() {
           <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={darkTheme}>
               <CssBaseline />
-              <SnackbarProvider>
+              <SnackbarProvider autoHideDuration={3000}>
                 <InnerApp />
               </SnackbarProvider>
             </ThemeProvider>

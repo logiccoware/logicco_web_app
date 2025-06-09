@@ -4,7 +4,7 @@ import { UpdateModalContent } from "@/features/payees/components/Modals/PayeeUpd
 import { useQuery } from "@tanstack/react-query";
 import { foldQuery } from "@/lib/helpers/foldQuery";
 import { ModalContentLoading } from "@/components/ui/Modals/ModalContentLoading";
-import { ModalContentError } from "@/components/ui/Modals/ModalContentError";
+import { ModalContentMessage } from "@/components/ui/Modals/ModalContentMessage";
 import { FormattedMessage } from "react-intl";
 
 interface IProps {
@@ -35,9 +35,9 @@ export function PayeeUpdateModal({
           return null;
         },
         errorComponent: () => (
-          <ModalContentError>
+          <ModalContentMessage type="error">
             <FormattedMessage id="Common.genericErrorMessage" />
-          </ModalContentError>
+          </ModalContentMessage>
         ),
       })}
     </BaseModal>

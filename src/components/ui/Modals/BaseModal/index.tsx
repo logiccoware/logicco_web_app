@@ -1,14 +1,15 @@
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import type { PropsWithChildren } from "react";
+import DialogTitle from "@mui/material/DialogTitle";
 
 interface IProps {
   isOpen?: boolean;
   closeModal: () => void;
   title: string;
+  fullScreen?: boolean;
 }
 
 const StyledDialog = styled(Dialog)(({ theme }) => ({
@@ -25,9 +26,16 @@ export function BaseModal({
   closeModal,
   title,
   children,
+  fullScreen = false,
 }: PropsWithChildren<IProps>) {
   return (
-    <StyledDialog fullWidth maxWidth='sm' open={isOpen} onClose={closeModal}>
+    <StyledDialog
+      fullScreen={fullScreen}
+      fullWidth={!fullScreen}
+      maxWidth={fullScreen ? undefined : "sm"}
+      open={isOpen}
+      onClose={closeModal}
+    >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
         {title}
       </DialogTitle>

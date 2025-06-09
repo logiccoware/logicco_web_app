@@ -3,9 +3,10 @@ import { UpdateModalContent } from "@/features/accounts/components/Modals/Accoun
 import { useQuery } from "@tanstack/react-query";
 import { foldQuery } from "@/lib/helpers/foldQuery";
 import { ModalContentLoading } from "@/components/ui/Modals/ModalContentLoading";
-import { ModalContentError } from "@/components/ui/Modals/ModalContentError";
+import { ModalContentMessage } from "@/components/ui/Modals/ModalContentMessage";
 import { FormattedMessage, useIntl } from "react-intl";
 import { accountQueryOptions } from "@/features/accounts/api/queries/accountQuery";
+import DialogContent from "@mui/material/DialogContent";
 
 interface IProps {
   isOpen?: boolean;
@@ -29,26 +30,28 @@ export function AccountUpdateModal({
       closeModal={closeModal}
       title={intl.formatMessage({ id: "Accounts.modals.update.title" })}
     >
-      {foldQuery(query, {
-        loadingComponent: () => <ModalContentLoading />,
-        successComponent: (data) => {
-          if (data) {
-            return (
-              <UpdateModalContent
-                closeModal={closeModal}
-                account={data.account}
-                accountDefaultId={accountDefaultId}
-              />
-            );
-          }
-          return null;
-        },
-        errorComponent: () => (
-          <ModalContentError>
-            <FormattedMessage id="Common.genericErrorMessage" />
-          </ModalContentError>
-        ),
-      })}
+      <DialogContent>
+        {foldQuery(query, {
+          loadingComponent: () => <ModalContentLoading />,
+          successComponent: (data) => {
+            if (data) {
+              return (
+                <UpdateModalContent
+                  closeModal={closeModal}
+                  account={data.account}
+                  accountDefaultId={accountDefaultId}
+                />
+              );
+            }
+            return null;
+          },
+          errorComponent: () => (
+            <ModalContentMessage type="error">
+              <FormattedMessage id="Common.genericErrorMessage" />
+            </ModalContentMessage>
+          ),
+        })}
+      </DialogContent>
     </BaseModal>
   );
 }
