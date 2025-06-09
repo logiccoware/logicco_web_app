@@ -9,9 +9,14 @@ import { getCategoriesTreeViewQueryKey } from "@/features/categories/api/queries
 interface IProps {
   closeModal: () => void;
   categoryId: string;
+  resetSelectedCategory: () => void;
 }
 
-export function CategoryDeleteModal({ closeModal, categoryId }: IProps) {
+export function CategoryDeleteModal({
+  closeModal,
+  categoryId,
+  resetSelectedCategory,
+}: IProps) {
   const categoryDeleteMutation = useCategoryDeleteMutation();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
@@ -21,6 +26,7 @@ export function CategoryDeleteModal({ closeModal, categoryId }: IProps) {
       { categoryId },
       {
         onSuccess: () => {
+          resetSelectedCategory();
           enqueueSnackbar({
             variant: "success",
             autoHideDuration: 1500,

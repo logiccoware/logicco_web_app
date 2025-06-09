@@ -19,11 +19,11 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import type { ISelectedCategory } from "@/features/categories/types";
-import { useCategoryModals } from "@/features/categories/hooks/useCategoryModals";
 import { CategoryCreateModal } from "@/features/categories/components/Modals/CategoryCreateModal";
 import { RichTreeView } from "@mui/x-tree-view/RichTreeView";
 import { CategoryUpdateModal } from "@/features/categories/components/Modals/CategoryUpdateModal";
 import { CategoryDeleteModal } from "@/features/categories/components/Modals/CategoryDeleteModal";
+import { useDisclosure } from "@/lib/hooks/useDisclosure";
 
 interface IProps {
   closeModal: () => void;
@@ -44,17 +44,18 @@ export function CategoryManageModal({
   const [selectedCategory, setSelectedCategory] =
     useState<ISelectedCategory | null>(null);
 
-  const {
+  const [
     isCategoryCreateModalOpen,
-    closeCategoryCreateModal,
-    openCategoryCreateModal,
+    { open: openCategoryCreateModal, close: closeCategoryCreateModal },
+  ] = useDisclosure();
+  const [
     isCategoryUpdateModalOpen,
-    openCategoryUpdateModal,
-    closeCategoryUpdateModal,
+    { open: openCategoryUpdateModal, close: closeCategoryUpdateModal },
+  ] = useDisclosure();
+  const [
     isCategoryDeleteModalOpen,
-    openCategoryDeleteModal,
-    closeCategoryDeleteModal,
-  } = useCategoryModals();
+    { open: openCategoryDeleteModal, close: closeCategoryDeleteModal },
+  ] = useDisclosure();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
@@ -62,17 +63,23 @@ export function CategoryManageModal({
   const intl = useIntl();
   const query = useQuery(categoriesTreeViewQueryOptions);
 
+  function resetSelectedCategory() {
+    setSelectedCategory(null);
+  }
+
   const handleSelectedItemChange = (
     _event: React.SyntheticEvent | null,
     id: string | null
   ) => {
     if (id) {
       if (id === selectedCategory?.id) {
-        setSelectedCategory(null);
+        resetSelectedCategory();
       } else {
         const selected = getSelectedCategory(id);
         setSelectedCategory(selected);
       }
+    } else {
+      resetSelectedCategory();
     }
   };
 
@@ -142,6 +149,7 @@ export function CategoryManageModal({
           <CategoryDeleteModal
             closeModal={closeCategoryDeleteModal}
             categoryId={selectedCategory.id}
+            resetSelectedCategory={resetSelectedCategory}
           />
         ) : null}
         <Stack sx={{ mx: 2 }} direction="row" justifyContent="space-between">
@@ -184,8 +192,8 @@ export function CategoryManageModal({
               if (data && data.length > 0) {
                 return (
                   <RichTreeView
+                    checkboxSelection
                     items={data}
-                    selectedItems={selectedCategory?.id}
                     onSelectedItemsChange={handleSelectedItemChange}
                     multiSelect={false}
                   />

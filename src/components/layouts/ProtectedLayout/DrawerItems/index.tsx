@@ -10,8 +10,8 @@ import Divider from "@mui/material/Divider";
 import { AppLink } from "@/components/ui/AppLink";
 import { useIntl } from "react-intl";
 import { useLogout } from "@/features/auth/hooks/useLogout";
-import { useCategoryModals } from "@/features/categories/hooks/useCategoryModals";
 import { CategoryManageModal } from "@/features/categories/components/Modals/CategoryManageModal";
+import { useDisclosure } from "@/lib/hooks/useDisclosure";
 
 interface IProps {
   handleDrawerClose: () => void;
@@ -19,11 +19,10 @@ interface IProps {
 }
 
 export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
-  const {
+  const [
     isCategoryManageModalOpen,
-    openCategoryManageModal,
-    closeCategoryManageModal,
-  } = useCategoryModals();
+    { open: openCategoryManageModal, close: closeCategoryManageModal },
+  ] = useDisclosure();
   const intl = useIntl();
   const { logout, isLoading: isLogoutLoading } = useLogout();
 
