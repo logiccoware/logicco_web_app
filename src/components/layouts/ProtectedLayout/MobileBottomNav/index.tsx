@@ -1,7 +1,6 @@
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ListIcon from "@mui/icons-material/List";
 import { AppLink } from "@/components/ui/AppLink";
@@ -30,22 +29,15 @@ export function MobileBottomNav() {
     >
       <BottomNavigation showLabels value={pathname}>
         <BottomNavigationAction
-          to="/"
-          value="/"
-          label="Overview"
-          icon={<DashboardIcon />}
-          component={AppLink}
-        />
-        <BottomNavigationAction
-          to="/spendings"
-          value="/spendings"
+          to="/transactions/spendings/payees"
+          value="/transactions/spendings/payees"
           label="Spending"
           icon={<DataUsageIcon />}
           component={AppLink}
         />
         <BottomNavigationAction
-          to="/transactions"
-          value="/transactions"
+          to="/transactions/list"
+          value="/transactions/list"
           label="Transactions"
           icon={<ListIcon />}
           component={AppLink}

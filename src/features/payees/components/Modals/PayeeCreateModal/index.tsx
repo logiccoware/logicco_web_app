@@ -14,16 +14,10 @@ import { getPayeesListQueryKeys } from "@/features/payees/api/queries/payeesList
 import { ModalSubmitButton } from "@/components/ui/Modals/ModalSubmitButton";
 
 interface IProps {
-  isOpen?: boolean;
   closeModal: () => void;
-  title: string;
 }
 
-export function PayeeCreateModal({
-  isOpen = false,
-  closeModal,
-  title,
-}: IProps) {
+export function PayeeCreateModal({ closeModal }: IProps) {
   const form = usePayeeForm({
     defaultValues: {
       name: "",
@@ -64,7 +58,7 @@ export function PayeeCreateModal({
   };
 
   return (
-    <BaseModal isOpen={isOpen} closeModal={closeModal} title={title}>
+    <BaseModal isOpen closeModal={closeModal} title={intl.formatMessage({ id: "Payees.modals.select.title" })}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <DialogContent dividers>
           <PayeeFormFields form={form} />

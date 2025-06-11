@@ -51,21 +51,17 @@ function RouteComponent() {
       />
       {Boolean(searchParams.isPayeeCreateModalOpen) ? (
         <PayeeCreateModal
-          isOpen
           closeModal={() => {
             navigate({
               search: () => ({ isPayeeCreateModalOpen: undefined }),
               replace: true,
             });
           }}
-          title={intl.formatMessage({ id: "Payees.modals.create.title" })}
         />
       ) : null}
       {searchParams.payeeUpdateModalId ? (
         <PayeeUpdateModal
           payeeId={searchParams.payeeUpdateModalId}
-          title={intl.formatMessage({ id: "Payees.modals.update.title" })}
-          isOpen
           closeModal={() => {
             navigate({
               search: () => ({ payeeUpdateModalId: undefined }),

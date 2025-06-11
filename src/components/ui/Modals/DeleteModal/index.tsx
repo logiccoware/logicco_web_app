@@ -28,7 +28,9 @@ export function DeleteModal({
         <Typography>{message}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeModal}>Cancel</Button>
+        <Button onClick={closeModal}>
+          <FormattedMessage id="Common.forms.cancelButton" />
+        </Button>
         <Button
           loading={isLoading}
           disabled={isLoading}

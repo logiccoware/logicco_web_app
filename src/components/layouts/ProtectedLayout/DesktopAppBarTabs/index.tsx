@@ -1,6 +1,5 @@
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ListIcon from "@mui/icons-material/List";
 import { AppLink } from "@/components/ui/AppLink";
@@ -17,34 +16,26 @@ export function DesktopAppbarTabs() {
 
   return (
     <Tabs
-      value={pathname}
+      value={pathname.includes("/spendings") ? "/transactions/spendings" : pathname}
       indicatorColor="primary"
       textColor="primary"
       centered
     >
       <Tab
-        label="Overview"
-        value="/"
-        icon={<DashboardIcon />}
-        iconPosition="start"
-        component={AppLink}
-        to="/"
-      />
-      <Tab
         label="Spending"
-        value="/spendings"
+        value="/transactions/spendings"
         icon={<DataUsageIcon />}
         iconPosition="start"
         component={AppLink}
-        to="/spendings"
+        to="/transactions/spendings/payees"
       />
       <Tab
         label="Transactions"
-        value="/transactions"
+        value="/transactions/list"
         icon={<ListIcon />}
         iconPosition="start"
         component={AppLink}
-        to="/transactions"
+        to="/transactions/list"
       />
     </Tabs>
   );

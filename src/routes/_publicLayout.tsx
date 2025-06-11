@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_publicLayout")({
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       throw redirect({
-        to: "/",
+        to: "/transactions/list",
       });
     }
   },

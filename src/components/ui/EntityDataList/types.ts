@@ -5,3 +5,5 @@ export interface IEntityDataList<T> {
   rightIcon?: React.ReactNode;
   data: T;
 }
+
+export interface IEntitySelectDataList<T> extends IEntityDataList<T> {}

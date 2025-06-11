@@ -213,7 +213,9 @@ export function CategoryManageModal({
           })}
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button onClick={closeModal}>
+            <FormattedMessage id="Common.forms.cancelButton" />
+          </Button>
           {mode.type === "select" ? (
             <Button
               disabled={Boolean(
@@ -227,7 +229,7 @@ export function CategoryManageModal({
                 closeModal();
               }}
             >
-              Select
+              <FormattedMessage id="Common.modals.entitySelect.cta.select" />
             </Button>
           ) : null}
         </DialogActions>

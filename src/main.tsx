@@ -17,6 +17,8 @@ import { IntlProvider } from "react-intl";
 import { locales } from "@/lib/localization/locales";
 import { PageLoading } from "@/components/ui/PageLoading";
 import { CookiesProvider } from "react-cookie";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const queryClient = new QueryClient();
 
@@ -60,7 +62,9 @@ function App() {
             <ThemeProvider theme={darkTheme}>
               <CssBaseline />
               <SnackbarProvider autoHideDuration={3000}>
-                <InnerApp />
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en-CA'>
+                  <InnerApp />
+                </LocalizationProvider>
               </SnackbarProvider>
             </ThemeProvider>
           </QueryClientProvider>
