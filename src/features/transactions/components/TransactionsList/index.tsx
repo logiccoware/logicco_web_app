@@ -18,14 +18,12 @@ export function TransactionsList({
   return (
     <Card>
       <CardContent>
-        <Stack direction="column">
-          <TransactionListItem
-            data={data}
-            emptyListMessage="No data found"
-            handleItemClick={handleItemClick}
-            handleDeleteClick={handleDeleteClick}
-          />
-        </Stack>
+        <TransactionListItem
+          data={data}
+          emptyListMessage="No data found"
+          handleItemClick={handleItemClick}
+          handleDeleteClick={handleDeleteClick}
+        />
       </CardContent>
     </Card>
   );

@@ -1,4 +1,3 @@
-import { ProtectedPageContainer } from "@/components/layouts/ProtectedLayout/ProtectedPageContainer";
 import { FabAdd } from "@/components/ui/FaButton";
 import { transactionsQueryOptions } from "@/features/transactions/api/queries/transactionsQuery";
 import { TransactionsList } from "@/features/transactions/components/TransactionsList";
@@ -51,7 +50,7 @@ function TransactionsListPage() {
     monthQueryParam: searchParams.month,
   });
   return (
-    <ProtectedPageContainer>
+    <Box sx={{ mt: 4 }}>
       <TransactionDateSwitcher
         monthLabel={monthLabel}
         rightClick={() =>
@@ -140,6 +139,6 @@ function TransactionsListPage() {
           transactionId={searchParams.transactionDeleteModalId}
         />
       ) : null}
-    </ProtectedPageContainer>
+    </Box>
   );
 }

@@ -29,6 +29,7 @@ export function TransactionListItem({
   }
   return data.map((group) => (
     <List
+      key={group.date}
       subheader={
         <ListSubheader>{dayjs(group.date).format("MMM D")}</ListSubheader>
       }
