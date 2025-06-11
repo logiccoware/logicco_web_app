@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Stack from "@mui/material/Stack";
 import type { ITransactionsGroupByDate } from "@/features/transactions/helpers/getGroupedTransactionsByDate";
 import { TransactionListItem } from "@/features/transactions/components/TransactionsList/TransactionListItem";
 
