@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ComingSoonPage } from "@/components/ui/ComingSoonPage";
 
 export const Route = createFileRoute("/_protectedLayout/")({
-  component: ComingSoonPage,
+  component: RouteComponent,
 });
+
+function RouteComponent() {
+  return <div>Hello "/_protectedLayout/"!</div>;
+}

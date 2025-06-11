@@ -1,4 +1,7 @@
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import { DataListItemMenu } from "@/components/ui/EntityDataList/DataListItemMenu";
 import type { IEntityDataList } from "@/components/ui/EntityDataList/types";
 import { DataListEmpty } from "@/components/ui/EntityDataList/DataListEmpty";

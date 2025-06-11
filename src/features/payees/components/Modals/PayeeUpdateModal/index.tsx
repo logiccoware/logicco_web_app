@@ -5,25 +5,24 @@ import { useQuery } from "@tanstack/react-query";
 import { foldQuery } from "@/lib/helpers/foldQuery";
 import { ModalContentLoading } from "@/components/ui/Modals/ModalContentLoading";
 import { ModalContentMessage } from "@/components/ui/Modals/ModalContentMessage";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface IProps {
-  isOpen?: boolean;
   closeModal: () => void;
-  title: string;
+
   payeeId: string;
 }
 
-export function PayeeUpdateModal({
-  isOpen = false,
-  closeModal,
-  title,
-  payeeId,
-}: IProps) {
+export function PayeeUpdateModal({ closeModal, payeeId }: IProps) {
+  const intl = useIntl();
   const query = useQuery(payeeQuery(payeeId));
 
   return (
-    <BaseModal isOpen={isOpen} closeModal={closeModal} title={title}>
+    <BaseModal
+      isOpen
+      closeModal={closeModal}
+      title={intl.formatMessage({ id: "Payees.modals.select.title" })}
+    >
       {foldQuery(query, {
         loadingComponent: () => <ModalContentLoading />,
         successComponent: (data) => {

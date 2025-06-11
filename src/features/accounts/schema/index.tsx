@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export type TCurrnecyCode = z.infer<typeof CurrencyCodeSchema>;
+export type TCurrencyCode = z.infer<typeof CurrencyCodeSchema>;
 export const CurrencyCodeSchema = z.enum(["USD", "INR", "CAD"], {
   message: "Invalid currency code",
 });
