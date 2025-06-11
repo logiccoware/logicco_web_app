@@ -16,7 +16,7 @@ export function FabAdd({ onClick }: IProps) {
     <Box
       sx={{
         position: "fixed",
-        bottom: isMobile ? 60 : 12,
+        bottom: isMobile ? 68 : 12,
         right: 12,
         zIndex: 'fab',
       }}
