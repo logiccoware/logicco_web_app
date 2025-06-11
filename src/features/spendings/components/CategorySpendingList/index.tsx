@@ -8,6 +8,7 @@ import { useState } from "react";
 import type { TCategorySpendingListItem } from "@/features/spendings/schema";
 import { SpendingEmptyMessage } from "@/features/spendings/components/SpendingEmptyMessage";
 import { FormattedMessage } from "react-intl";
+import Stack from "@mui/material/Stack";
 
 interface IProps {
   data: TCategorySpendingListItem[];
@@ -36,7 +37,14 @@ export function CategorySpendingList({ data }: IProps) {
       {data.map((item) => (
         <div key={item.id}>
           <ListItemButton divider onClick={() => handleClick(item.name)}>
-            <ListItemText primary={item.name} />
+            <ListItemText
+              primary={
+                <Stack direction="row" justifyContent="space-between">
+                  <span>{item.name}</span>
+                  <span>{item.totalAmount}</span>
+                </Stack>
+              }
+            />
             {item.children.length > 0 ? (
               openItems[item.name] ? (
                 <ExpandLess />
@@ -49,7 +57,14 @@ export function CategorySpendingList({ data }: IProps) {
             <List component="div" disablePadding>
               {item.children.map((child) => (
                 <ListItemButton key={child.id} sx={{ pl: 4 }}>
-                  <ListItemText primary={child.name} />
+                  <ListItemText
+                    primary={
+                      <Stack direction="row" justifyContent="space-between">
+                        <span>{child.name}</span>
+                        <span>{child.amount}</span>
+                      </Stack>
+                    }
+                  />
                 </ListItemButton>
               ))}
             </List>

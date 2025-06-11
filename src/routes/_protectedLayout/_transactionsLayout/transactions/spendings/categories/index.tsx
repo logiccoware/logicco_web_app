@@ -73,6 +73,7 @@ function RouteComponent() {
               data: data.pieChartData,
             },
           ]}
+          hideLegend
           width={200}
           height={200}
         />
