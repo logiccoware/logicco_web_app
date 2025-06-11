@@ -71,6 +71,7 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
       <AppBar
         position="fixed"
         sx={{
+          height: 64,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
@@ -102,7 +103,6 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
       >
         <Drawer
           variant="temporary"

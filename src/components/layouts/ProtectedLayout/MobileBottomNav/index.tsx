@@ -24,11 +24,13 @@ export function MobileBottomNav() {
         right: 0,
         width: "100%",
         zIndex: theme.zIndex.appBar,
-        height: 64,
       }}
       elevation={3}
     >
       <BottomNavigation
+        sx={{
+          height: 64,
+        }}
         showLabels
         value={
           pathname.includes("/spendings") ? "/transactions/spendings" : pathname
