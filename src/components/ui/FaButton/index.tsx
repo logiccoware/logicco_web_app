@@ -13,7 +13,14 @@ export function FabAdd({ onClick }: IProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Box sx={{ position: "fixed", bottom: isMobile ? 60 : 12, right: 12 }}>
+    <Box
+      sx={{
+        position: "fixed",
+        bottom: isMobile ? 60 : 12,
+        right: 12,
+        zIndex: 'fab',
+      }}
+    >
       <Stack gap={2} direction="row">
         <FAB onClick={onClick} color="primary" aria-label="add">
           <AddIcon />
