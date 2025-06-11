@@ -71,7 +71,6 @@ export function ProtectedLayout({ children }: PropsWithChildren) {
       <AppBar
         position="fixed"
         sx={{
-          height: 64,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
         }}
