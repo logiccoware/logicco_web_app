@@ -9,6 +9,7 @@ import type { TCategorySpendingListItem } from "@/features/spendings/schema";
 import { SpendingEmptyMessage } from "@/features/spendings/components/SpendingEmptyMessage";
 import { FormattedMessage } from "react-intl";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 
 interface IProps {
   data: TCategorySpendingListItem[];
@@ -51,7 +52,9 @@ export function CategorySpendingList({ data }: IProps) {
               ) : (
                 <ExpandMore />
               )
-            ) : null}
+            ) : (
+              <Box sx={{ ml: 3 }} />
+            )}
           </ListItemButton>
           <Collapse in={!!openItems[item.name]} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>

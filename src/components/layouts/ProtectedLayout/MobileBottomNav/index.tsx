@@ -24,13 +24,19 @@ export function MobileBottomNav() {
         right: 0,
         width: "100%",
         zIndex: theme.zIndex.appBar,
+        height: 64,
       }}
       elevation={3}
     >
-      <BottomNavigation showLabels value={pathname}>
+      <BottomNavigation
+        showLabels
+        value={
+          pathname.includes("/spendings") ? "/transactions/spendings" : pathname
+        }
+      >
         <BottomNavigationAction
           to="/transactions/spendings/payees"
-          value="/transactions/spendings/payees"
+          value="/transactions/spendings"
           label="Spending"
           icon={<DataUsageIcon />}
           component={AppLink}

@@ -6,7 +6,6 @@ import ListItemText from "@mui/material/ListItemText";
 import { PROTECTED_LAYOUT_DRAWER_ITEMS } from "@/components/layouts/ProtectedLayout/constants";
 import IconLogout from "@mui/icons-material/Logout";
 import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import { AppLink } from "@/components/ui/AppLink";
 import { useIntl } from "react-intl";
 import { useLogout } from "@/features/auth/hooks/useLogout";
@@ -45,9 +44,13 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
           }}
         />
       ) : null}
-      <Stack justifyContent="space-between" direction="column">
+      <Stack
+        sx={{ height: "calc(100vh - 64px)" }}
+        justifyContent="space-between"
+        direction="column"
+      >
         <List>
-          <ListItem disablePadding>
+          <ListItem divider disablePadding>
             <ListItemButton
               component={AppLink}
               onClick={handleDrawerClose}
@@ -64,7 +67,7 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem divider disablePadding>
             <ListItemButton
               component={AppLink}
               onClick={handleDrawerClose}
@@ -81,7 +84,7 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
               />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          <ListItem divider disablePadding>
             <ListItemButton onClick={handleOpenCategoryManageModal}>
               <ListItemIcon>
                 {PROTECTED_LAYOUT_DRAWER_ITEMS.category.icon}
@@ -94,7 +97,6 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
             </ListItemButton>
           </ListItem>
         </List>
-        <Divider />
         <List>
           <ListItem disablePadding>
             <ListItemButton
