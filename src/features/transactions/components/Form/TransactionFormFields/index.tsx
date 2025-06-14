@@ -53,9 +53,13 @@ export function TransactionFormFields({ form }: IProps) {
           <FormControl fullWidth>
             <NumericFormat
               {...field}
+              onChange={undefined}
+              onValueChange={({ value }) => field.onChange(value)}
               customInput={TextField}
               thousandSeparator
               valueIsNumericString
+              allowNegative={false}
+              decimalScale={2}
               prefix="$"
               error={Boolean(form.formState.errors.amount)}
               helperText={form.formState.errors.amount?.message}

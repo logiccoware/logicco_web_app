@@ -219,6 +219,7 @@ export class TransactionApiService {
     transactionId: string,
     payload: ITransactionUpdatePayload
   ) {
+    console.log("Updating transaction", transactionId, payload);
     const user = await getUserOrFail();
     try {
       const { error: transactionError } = await this.supabase
