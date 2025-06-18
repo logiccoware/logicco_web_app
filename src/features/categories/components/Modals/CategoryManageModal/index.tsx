@@ -63,6 +63,8 @@ export function CategoryManageModal({
   const intl = useIntl();
   const query = useQuery(categoriesTreeViewQueryOptions);
 
+  console.log("err", query.error);
+
   function resetSelectedCategory() {
     setSelectedCategory(null);
   }

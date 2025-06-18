@@ -45,7 +45,7 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
         />
       ) : null}
       <Stack
-        sx={{ height: "calc(100vh - 64px)" }}
+        sx={{ height: "calc(100vh - 100px)" }}
         justifyContent="space-between"
         direction="column"
       >

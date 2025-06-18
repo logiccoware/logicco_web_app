@@ -1,11 +1,9 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   GetAccountsSchema,
   GetAccountSchema,
   type TGetAccount,
   type TGetAccounts,
 } from "@/features/accounts/schema";
-import { getUserOrFail } from "@/features/auth/api/helpers/getUserOrFail";
 import type {
   IAccountCreatePayload,
   IAccountUpdatePayload,
@@ -15,108 +13,109 @@ import {
   getDefaultAccountCookie,
   removeDefaultAccountCookie,
 } from "@/features/accounts/helpers/cookie";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { getFirebaseUserOrFail } from "@/features/auth/api/helpers/getFirebaseUserOrFail";
+import type { FirebaseApp } from "firebase/app";
 
 export class AccountApiService {
-  constructor(private readonly supabase: SupabaseClient) {}
+  constructor(private readonly firebaseApp: FirebaseApp) {}
+
+  private getAccountsCollectionRef() {
+    const user = getFirebaseUserOrFail(this.firebaseApp);
+    const db = getFirestore(this.firebaseApp);
+    return collection(db, "users", user.uid, "accounts");
+  }
+
+  private getAccountDocRef(accountId: string) {
+    const user = getFirebaseUserOrFail(this.firebaseApp);
+    const db = getFirestore(this.firebaseApp);
+    return doc(db, "users", user.uid, "accounts", accountId);
+  }
 
   async getAccounts(): Promise<TGetAccounts> {
-    const { data } = await this.supabase
-      .from("accounts")
-      .select("id,name,currency")
-      .order("name");
-    return GetAccountsSchema.parse({
-      accounts: data ?? [],
-    });
+    const accountsColRef = this.getAccountsCollectionRef();
+    const q = query(accountsColRef, orderBy("name"));
+
+    const querySnapshot = await getDocs(q);
+    const accounts = querySnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    }));
+    return GetAccountsSchema.parse({ accounts });
   }
 
-  async createAccount({
-    name,
-    markDefault,
-  }: IAccountCreatePayload): Promise<void> {
-    const user = await getUserOrFail();
+  async createAccount({ name, markDefault, currency }: IAccountCreatePayload) {
+    const accountsColRef = this.getAccountsCollectionRef();
+    const docRef = await addDoc(accountsColRef, {
+      name,
+      currency,
+      createdAt: serverTimestamp(),
+    });
 
-    const { error, data } = await this.supabase
-      .from("accounts")
-      .insert([
-        {
-          name,
-          user_id: user.id,
-        },
-      ])
-      .select("id,name,currency")
-      .single();
-
-    if (error) {
-      throw new Error(`Failed to create account: ${error.message}`);
-    }
+    const docSnap = await getDoc(docRef);
 
     if (markDefault) {
-      setDefaultAccountCookie(data);
+      setDefaultAccountCookie({ id: docRef.id, ...docSnap.data() });
     }
   }
 
-  async getAccount(accountId: string): Promise<TGetAccount | null> {
-    const user = await getUserOrFail();
-    const { data, error } = await this.supabase
-      .from("accounts")
-      .select("id,name,currency")
-      .eq("id", accountId)
-      .eq("user_id", user.id)
-      .single();
+  async getAccount(accountId: string): Promise<TGetAccount> {
+    const accountDocRef = this.getAccountDocRef(accountId);
 
-    if (error) {
-      console.error(`Failed to fetch account: ${error.message}`);
-      return null;
+    const docSnap = await getDoc(accountDocRef);
+
+    if (docSnap.exists()) {
+      return GetAccountSchema.parse({
+        account: {
+          id: docSnap.id,
+          ...docSnap.data(),
+        },
+      });
     }
 
-    return GetAccountSchema.parse({
-      account: data,
-    });
+    throw new Error(`Account with ID ${accountId} not found`);
   }
 
   async updateAccount(
     accountId: string,
-    { name, markDefault }: IAccountUpdatePayload
+    { name, markDefault, currency }: IAccountUpdatePayload
   ): Promise<void> {
-    const user = await getUserOrFail();
+    const accountDocRef = this.getAccountDocRef(accountId);
 
-    const { error, data } = await this.supabase
-      .from("accounts")
-      .update({ name, user_id: user?.id })
-      .eq("id", accountId)
-      .eq("user_id", user?.id)
-      .select("id,name,currency")
-      .single();
-
-    if (error) {
-      throw new Error(`Failed to update account: ${error.message}`);
-    }
+    await updateDoc(accountDocRef, {
+      name,
+      currency,
+    });
 
     const defaultAccountCookie = getDefaultAccountCookie();
 
     if (markDefault) {
-      setDefaultAccountCookie(data);
+      const updatedSnap = await getDoc(accountDocRef);
+      setDefaultAccountCookie({ id: accountId, ...updatedSnap.data() });
     }
 
     if (defaultAccountCookie?.id === accountId && !markDefault) {
       removeDefaultAccountCookie();
     }
   }
-
   async deleteAccount(accountId: string): Promise<void> {
-    const user = await getUserOrFail();
-    const { error } = await this.supabase
-      .from("accounts")
-      .delete()
-      .eq("id", accountId)
-      .eq("user_id", user.id);
+    const accountDocRef = this.getAccountDocRef(accountId);
 
-    if (error) {
-      throw new Error(`Failed to delete accounts: ${error.message}`);
-    }
+    await deleteDoc(accountDocRef);
 
     const defaultAccountCookie = getDefaultAccountCookie();
-
     if (defaultAccountCookie?.id === accountId) {
       removeDefaultAccountCookie();
     }

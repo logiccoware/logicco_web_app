@@ -1,4 +1,4 @@
 import { PayeeApiService } from "@/features/payees/api/services/PayeeApiService";
-import { supabase } from "@/lib/supabase/services";
+import { firebaseApp } from "@/lib/firebase/client";
 
-export const payeeApiService = new PayeeApiService(supabase);
+export const payeeApiService = new PayeeApiService(firebaseApp);

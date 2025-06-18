@@ -58,7 +58,7 @@ export function PayeeCreateModal({ closeModal }: IProps) {
   };
 
   return (
-    <BaseModal isOpen closeModal={closeModal} title={intl.formatMessage({ id: "Payees.modals.select.title" })}>
+    <BaseModal isOpen closeModal={closeModal} title={intl.formatMessage({ id: "Payees.modals.create.title" })}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <DialogContent dividers>
           <PayeeFormFields form={form} />

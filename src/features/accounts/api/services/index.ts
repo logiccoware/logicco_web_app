@@ -1,4 +1,4 @@
 import { AccountApiService } from "@/features/accounts/api/services/AccountApiService";
-import { supabase } from "@/lib/supabase/services";
+import { firebaseApp } from "@/lib/firebase/client";
 
-export const accountsApiService = new AccountApiService(supabase);
+export const accountsApiService = new AccountApiService(firebaseApp);

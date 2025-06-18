@@ -1,4 +1,4 @@
 import { CategoryApiService } from "@/features/categories/api/services/CategoryApiService";
-import { supabase } from "@/lib/supabase/services";
+import { firebaseApp } from "@/lib/firebase/client";
 
-export const categoryApiService = new CategoryApiService(supabase);
+export const categoryApiService = new CategoryApiService(firebaseApp);

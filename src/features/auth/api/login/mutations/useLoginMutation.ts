@@ -1,6 +1,6 @@
-import { InvalidLoginCredentialsError } from "@/features/auth/exceptions/InvalidLoginCredentialsError";
-import { supabase } from "@/lib/supabase/services";
+import { firebaseApp } from "@/lib/firebase/client";
 import { useMutation } from "@tanstack/react-query";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 interface ILoginMutationArgs {
   payload: {
@@ -11,15 +11,11 @@ interface ILoginMutationArgs {
 
 export function useLoginMutation() {
   return useMutation({
-    mutationFn: async ({ payload }: ILoginMutationArgs) => {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: payload.email,
-        password: payload.password,
-      });
-
-      if (error) {
-        throw new InvalidLoginCredentialsError();
-      }
+    mutationFn: async ({
+      payload: { email, password },
+    }: ILoginMutationArgs) => {
+      const auth = getAuth(firebaseApp);
+      await signInWithEmailAndPassword(auth, email, password);
     },
   });
 }

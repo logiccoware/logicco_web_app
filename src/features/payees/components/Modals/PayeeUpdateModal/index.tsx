@@ -21,7 +21,7 @@ export function PayeeUpdateModal({ closeModal, payeeId }: IProps) {
     <BaseModal
       isOpen
       closeModal={closeModal}
-      title={intl.formatMessage({ id: "Payees.modals.select.title" })}
+      title={intl.formatMessage({ id: "Payees.modals.update.title" })}
     >
       {foldQuery(query, {
         loadingComponent: () => <ModalContentLoading />,

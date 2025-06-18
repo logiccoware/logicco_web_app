@@ -3,48 +3,48 @@ import {
   useContext,
   useEffect,
   useState,
-  type ReactNode,
+  type PropsWithChildren,
 } from "react";
-import { supabase } from "@/lib/supabase/services";
-import type { Session } from "@supabase/supabase-js";
+import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+import { firebaseApp } from "@/lib/firebase/client";
 
 export interface AuthContext {
-  session: Session | null;
+  user: User | null;
   loading: boolean;
 }
 
 const AuthContext = createContext<AuthContext>({
-  session: null,
+  user: null,
   loading: true,
 });
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return (
-    <AuthContext.Provider value={{ session, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
-
 export function useAuth() {
   return useContext(AuthContext);
+}
+
+export function AuthProvider({ children }: PropsWithChildren) {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  console.log("AuthProvider initialized", {
+    currentUser,
+    loading,
+  });
+
+  useEffect(() => {
+    const auth = getAuth(firebaseApp);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const value = {
+    user: currentUser,
+    loading,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
