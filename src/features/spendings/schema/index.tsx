@@ -32,7 +32,7 @@ export type TPayeeSpending = z.infer<typeof PayeeSpendingListSchema>;
 export const PayeeSpendingListSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
-  amount: z.string().min(1),
+  amount: z.number(),
 });
 
 export type TGetSpendingByPayee = z.infer<typeof GetSpendingByPayeeSchema>;
@@ -88,7 +88,7 @@ export type TCategorySpendingChildItem = z.infer<
 export const CategorySpendingListItemSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
-  totalAmount: z.string().min(1),
+  totalAmount: z.number(),
   children: z.array(CategorySpendingChildItemSchema),
 });
 export type TCategorySpendingListItem = z.infer<

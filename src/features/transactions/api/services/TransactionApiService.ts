@@ -13,7 +13,7 @@ import {
   GetTransactionQueryResponseSchema,
   GetTransactionSchema,
 } from "@/features/transactions/schema";
-import { formatCurrency } from "@/features/accounts/helpers/currency";
+import { formatAmount } from "@/features/accounts/helpers/currency";
 import { getUserOrFail } from "@/features/auth/api/helpers/getUserOrFail";
 
 export class TransactionApiService {
@@ -81,7 +81,7 @@ export class TransactionApiService {
         0
       );
 
-      const amount = formatCurrency(total, accountDefaultCookie.currency);
+      const amount = formatAmount(total, accountDefaultCookie.currency);
 
       let categoryDisplay = transaction.categories.name;
       if (transaction.categories.parent) {
@@ -163,7 +163,7 @@ export class TransactionApiService {
       date,
       note,
       amountNumeric: total,
-      amount: formatCurrency(total, account.currency),
+      amount: formatAmount(total, account.currency),
       type,
       account,
       category,

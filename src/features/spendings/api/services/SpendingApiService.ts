@@ -19,8 +19,8 @@ import {
   GetSpendingByPayeeRawQueryResponse,
 } from "@/features/spendings/schema";
 import { getTransactionType } from "@/features/transactions/helpers/getTransactionType";
-import currency from "currency.js";
-import { formatCurrency } from "@/features/accounts/helpers/currency";
+import currencyJs from "currency.js";
+import { formatAmount } from "@/features/accounts/helpers/currency";
 
 export class SpendingApiService {
   constructor(private readonly supabase: SupabaseClient) {}
@@ -86,12 +86,12 @@ export class SpendingApiService {
       let totalAmount = 0;
       transaction.transaction_items.forEach((item) => {
         // No need to divide by 100, the values are already correct
-        totalAmount = currency(totalAmount).add(item.amount).value;
+        totalAmount = currencyJs(totalAmount).add(item.amount).value;
       });
 
       if (payeeMap.has(payeeId)) {
         const existingPayee = payeeMap.get(payeeId)!;
-        existingPayee.totalAmount = currency(existingPayee.totalAmount).add(
+        existingPayee.totalAmount = currencyJs(existingPayee.totalAmount).add(
           totalAmount
         ).value;
       } else {
@@ -112,13 +112,13 @@ export class SpendingApiService {
       list.push({
         id: payee.id,
         name: payee.name,
-        amount: formatCurrency(payee.totalAmount, account.currency),
+        amount: payee.totalAmount
       });
 
       pieChartData.push({
         id: payee.id,
         label: payee.name,
-        value: currency(payee.totalAmount, { fromCents: true }).value,
+        value: currencyJs(payee.totalAmount, { fromCents: true }).value,
       });
 
       colorIndex++;
@@ -127,8 +127,8 @@ export class SpendingApiService {
     // Sort list by amount (highest to lowest)
     list.sort(
       (a, b) =>
-        parseFloat(b.amount.replace(/[^0-9.-]+/g, "")) -
-        parseFloat(a.amount.replace(/[^0-9.-]+/g, ""))
+        b.amount -
+        a.amount
     );
 
     // Sort pie chart data by value (highest to lowest)
@@ -206,7 +206,7 @@ export class SpendingApiService {
     parsedTransactions.forEach((transaction) => {
       // Sum all item amounts for this transaction
       const totalAmountForTransaction = transaction.transaction_items.reduce(
-        (sum, item) => currency(sum).add(item.amount).value,
+        (sum, item) => currencyJs(sum).add(item.amount).value,
         0
       );
 
@@ -241,7 +241,7 @@ export class SpendingApiService {
       }
 
       const mainCategoryEntry = aggregatedCategories.get(mainListCategoryId)!;
-      mainCategoryEntry.totalAmount = currency(
+      mainCategoryEntry.totalAmount = currencyJs(
         mainCategoryEntry.totalAmount
       ).add(totalAmountForTransaction).value;
 
@@ -254,7 +254,7 @@ export class SpendingApiService {
           });
         }
         const childEntry = mainCategoryEntry.children.get(childCategoryId)!;
-        childEntry.amount = currency(childEntry.amount).add(
+        childEntry.amount = currencyJs(childEntry.amount).add(
           totalAmountForTransaction
         ).value;
       }
@@ -270,7 +270,7 @@ export class SpendingApiService {
         childrenList.push({
           id: child.id,
           name: child.name,
-          amount: formatCurrency(child.amount, account.currency),
+          amount: formatAmount(child.amount, account.currency),
         });
       });
 
@@ -283,13 +283,13 @@ export class SpendingApiService {
       list.push({
         id: categoryData.id,
         name: categoryData.name,
-        totalAmount: formatCurrency(categoryData.totalAmount, account.currency),
+        totalAmount: categoryData.totalAmount,
         children: childrenList,
       });
 
       pieChartData.push({
         label: categoryData.name,
-        value: currency(categoryData.totalAmount, { fromCents: true }).value,
+        value: currencyJs(categoryData.totalAmount, { fromCents: true }).value,
         id: categoryData.id,
       });
       colorIndex++;
@@ -297,8 +297,8 @@ export class SpendingApiService {
 
     list.sort(
       (a, b) =>
-        parseFloat(b.totalAmount.replace(/[^0-9.-]+/g, "")) -
-        parseFloat(a.totalAmount.replace(/[^0-9.-]+/g, ""))
+        b.totalAmount -
+        a.totalAmount
     );
 
     pieChartData.sort((a, b) => b.value - a.value);

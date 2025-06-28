@@ -7,9 +7,11 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { getTransactionType } from "@/features/transactions/helpers/getTransactionType";
-import { TransactionTypeSwitcher } from "@/features/spendings/components/TransactionTypeSwitcher";
 import Box from "@mui/material/Box";
 import { SpendingTabs } from "@/features/spendings/components/SpendingTabs";
+import { formatAmount } from "@/features/accounts/helpers/currency";
+import currencyJs from "currency.js";
+import { SpendingOverview } from "@/features/spendings/components/SpendingOverview";
 
 export const Route = createFileRoute(
   "/_protectedLayout/_transactionsLayout/transactions/spendings/payees/"
@@ -47,6 +49,14 @@ function RouteComponent() {
   const { getMonth, monthLabel } = useMonthSwitcher({
     monthQueryParam: searchParams.month,
   });
+
+  const totalAmount = data.list.reduce(
+    (sum, { amount }) => currencyJs(sum).add(amount).value,
+    0
+  );
+
+  const totalAmountFormatted = `Total: ${formatAmount(totalAmount, "CAD")}`;
+
   return (
     <ProtectedPageContainer>
       <TransactionDateSwitcher
@@ -81,20 +91,17 @@ function RouteComponent() {
       <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
         <SpendingTabs />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", my: 2 }}>
-        <TransactionTypeSwitcher
-          selectedTransactionType={getTransactionType(
-            searchParams.transactionType
-          )}
-          onTransactionTypeChange={(transactionType) =>
-            navigate({
-              search: () => ({
-                transactionType: getTransactionType(transactionType),
-              }),
-            })
-          }
-        />
-      </Box>
+      <SpendingOverview
+        total={totalAmountFormatted}
+        transactionType={searchParams.transactionType}
+        onTransactionTypeChange={(transactionType) =>
+          navigate({
+            search: () => ({
+              transactionType: getTransactionType(transactionType),
+            }),
+          })
+        }
+      />
       <PayeeSpendingTable rows={data.list} />
     </ProtectedPageContainer>
   );

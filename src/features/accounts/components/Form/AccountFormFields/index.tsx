@@ -26,7 +26,6 @@ export function AccountFormFields({ form }: IProps) {
         render={({ field }) => (
           <TextField
             {...field}
-            autoFocus
             label={intl.formatMessage({
               id: "Accounts.form.fields.name.label",
             })}
