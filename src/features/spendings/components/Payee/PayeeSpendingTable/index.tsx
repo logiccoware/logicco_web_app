@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { FormattedMessage } from "react-intl";
 import { SpendingEmptyMessage } from "@/features/spendings/components/SpendingEmptyMessage";
+import { formatAmount } from "@/features/accounts/helpers/currency";
 
 interface IProps {
   rows: TPayeeSpending[];
@@ -40,7 +41,9 @@ export function PayeeSpendingTable({ rows }: IProps) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
+              <TableCell align="right">
+                {formatAmount(row.amount, "CAD")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

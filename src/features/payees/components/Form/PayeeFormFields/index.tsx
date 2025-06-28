@@ -19,7 +19,6 @@ export function PayeeFormFields({ form }: IProps) {
         render={({ field }) => (
           <TextField
             {...field}
-            autoFocus
             label={intl.formatMessage({ id: "Payees.form.fields.name.label" })}
             fullWidth
             error={Boolean(form.formState.errors.name)}

@@ -10,6 +10,7 @@ import { SpendingEmptyMessage } from "@/features/spendings/components/SpendingEm
 import { FormattedMessage } from "react-intl";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { formatAmount } from "@/features/accounts/helpers/currency";
 
 interface IProps {
   data: TCategorySpendingListItem[];
@@ -42,7 +43,7 @@ export function CategorySpendingList({ data }: IProps) {
               primary={
                 <Stack direction="row" justifyContent="space-between">
                   <span>{item.name}</span>
-                  <span>{item.totalAmount}</span>
+                  <span>{formatAmount(item.totalAmount, "CAD")}</span>
                 </Stack>
               }
             />

@@ -3,6 +3,7 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import ListIcon from "@mui/icons-material/List";
+import SettingsIcon from '@mui/icons-material/Settings';
 import { AppLink } from "@/components/ui/AppLink";
 import { useLocation } from "@tanstack/react-router";
 import { useTheme } from "@mui/material/styles";
@@ -48,6 +49,13 @@ export function MobileBottomNav() {
           value="/transactions/list"
           label="Transactions"
           icon={<ListIcon />}
+          component={AppLink}
+        />
+        <BottomNavigationAction
+          to="/mobile/settings"
+          value="/mobile/settings"
+          label="Settings"
+          icon={<SettingsIcon />}
           component={AppLink}
         />
       </BottomNavigation>

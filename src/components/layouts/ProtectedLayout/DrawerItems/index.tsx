@@ -13,11 +13,11 @@ import { CategoryManageModal } from "@/features/categories/components/Modals/Cat
 import { useDisclosure } from "@/lib/hooks/useDisclosure";
 
 interface IProps {
-  handleDrawerClose: () => void;
   pathname?: string;
+  variant?: "default" | "mobile";
 }
 
-export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
+export function DrawerItems({ pathname, variant = "default" }: IProps) {
   const [
     isCategoryManageModalOpen,
     { open: openCategoryManageModal, close: closeCategoryManageModal },
@@ -30,7 +30,6 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
   }
 
   function handleOpenCategoryManageModal() {
-    handleDrawerClose();
     openCategoryManageModal();
   }
 
@@ -45,7 +44,7 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
         />
       ) : null}
       <Stack
-        sx={{ height: "calc(100vh - 64px)" }}
+        sx={{ height: variant === "default" ? "calc(100vh - 64px)" : "" }}
         justifyContent="space-between"
         direction="column"
       >
@@ -53,7 +52,6 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
           <ListItem divider disablePadding>
             <ListItemButton
               component={AppLink}
-              onClick={handleDrawerClose}
               to={PROTECTED_LAYOUT_DRAWER_ITEMS.payee.href}
               selected={pathname === PROTECTED_LAYOUT_DRAWER_ITEMS.payee.href}
             >
@@ -70,7 +68,6 @@ export function DrawerItems({ handleDrawerClose, pathname }: IProps) {
           <ListItem divider disablePadding>
             <ListItemButton
               component={AppLink}
-              onClick={handleDrawerClose}
               to={PROTECTED_LAYOUT_DRAWER_ITEMS.account.href}
               selected={pathname === PROTECTED_LAYOUT_DRAWER_ITEMS.account.href}
             >

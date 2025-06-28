@@ -18,6 +18,7 @@ import { Route as ProtectedLayoutTransactionsLayoutImport } from './routes/_prot
 import { Route as PublicLayoutLoginIndexImport } from './routes/_publicLayout/login/index'
 import { Route as ProtectedLayoutPayeesIndexImport } from './routes/_protectedLayout/payees/index'
 import { Route as ProtectedLayoutAccountsIndexImport } from './routes/_protectedLayout/accounts/index'
+import { Route as ProtectedLayoutMobileSettingsIndexImport } from './routes/_protectedLayout/mobile/settings/index'
 import { Route as ProtectedLayoutTransactionsLayoutTransactionsListIndexImport } from './routes/_protectedLayout/_transactionsLayout/transactions/list/index'
 import { Route as ProtectedLayoutTransactionsLayoutTransactionsSpendingsPayeesIndexImport } from './routes/_protectedLayout/_transactionsLayout/transactions/spendings/payees/index'
 import { Route as ProtectedLayoutTransactionsLayoutTransactionsSpendingsCategoriesIndexImport } from './routes/_protectedLayout/_transactionsLayout/transactions/spendings/categories/index'
@@ -64,6 +65,13 @@ const ProtectedLayoutAccountsIndexRoute =
   ProtectedLayoutAccountsIndexImport.update({
     id: '/accounts/',
     path: '/accounts/',
+    getParentRoute: () => ProtectedLayoutRoute,
+  } as any)
+
+const ProtectedLayoutMobileSettingsIndexRoute =
+  ProtectedLayoutMobileSettingsIndexImport.update({
+    id: '/mobile/settings/',
+    path: '/mobile/settings/',
     getParentRoute: () => ProtectedLayoutRoute,
   } as any)
 
@@ -145,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLayoutLoginIndexImport
       parentRoute: typeof PublicLayoutImport
     }
+    '/_protectedLayout/mobile/settings/': {
+      id: '/_protectedLayout/mobile/settings/'
+      path: '/mobile/settings'
+      fullPath: '/mobile/settings'
+      preLoaderRoute: typeof ProtectedLayoutMobileSettingsIndexImport
+      parentRoute: typeof ProtectedLayoutImport
+    }
     '/_protectedLayout/_transactionsLayout/transactions/list/': {
       id: '/_protectedLayout/_transactionsLayout/transactions/list/'
       path: '/transactions/list'
@@ -197,6 +212,7 @@ interface ProtectedLayoutRouteChildren {
   ProtectedLayoutIndexRoute: typeof ProtectedLayoutIndexRoute
   ProtectedLayoutAccountsIndexRoute: typeof ProtectedLayoutAccountsIndexRoute
   ProtectedLayoutPayeesIndexRoute: typeof ProtectedLayoutPayeesIndexRoute
+  ProtectedLayoutMobileSettingsIndexRoute: typeof ProtectedLayoutMobileSettingsIndexRoute
 }
 
 const ProtectedLayoutRouteChildren: ProtectedLayoutRouteChildren = {
@@ -205,6 +221,8 @@ const ProtectedLayoutRouteChildren: ProtectedLayoutRouteChildren = {
   ProtectedLayoutIndexRoute: ProtectedLayoutIndexRoute,
   ProtectedLayoutAccountsIndexRoute: ProtectedLayoutAccountsIndexRoute,
   ProtectedLayoutPayeesIndexRoute: ProtectedLayoutPayeesIndexRoute,
+  ProtectedLayoutMobileSettingsIndexRoute:
+    ProtectedLayoutMobileSettingsIndexRoute,
 }
 
 const ProtectedLayoutRouteWithChildren = ProtectedLayoutRoute._addFileChildren(
@@ -229,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/accounts': typeof ProtectedLayoutAccountsIndexRoute
   '/payees': typeof ProtectedLayoutPayeesIndexRoute
   '/login': typeof PublicLayoutLoginIndexRoute
+  '/mobile/settings': typeof ProtectedLayoutMobileSettingsIndexRoute
   '/transactions/list': typeof ProtectedLayoutTransactionsLayoutTransactionsListIndexRoute
   '/transactions/spendings/categories': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsCategoriesIndexRoute
   '/transactions/spendings/payees': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsPayeesIndexRoute
@@ -240,6 +259,7 @@ export interface FileRoutesByTo {
   '/accounts': typeof ProtectedLayoutAccountsIndexRoute
   '/payees': typeof ProtectedLayoutPayeesIndexRoute
   '/login': typeof PublicLayoutLoginIndexRoute
+  '/mobile/settings': typeof ProtectedLayoutMobileSettingsIndexRoute
   '/transactions/list': typeof ProtectedLayoutTransactionsLayoutTransactionsListIndexRoute
   '/transactions/spendings/categories': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsCategoriesIndexRoute
   '/transactions/spendings/payees': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsPayeesIndexRoute
@@ -254,6 +274,7 @@ export interface FileRoutesById {
   '/_protectedLayout/accounts/': typeof ProtectedLayoutAccountsIndexRoute
   '/_protectedLayout/payees/': typeof ProtectedLayoutPayeesIndexRoute
   '/_publicLayout/login/': typeof PublicLayoutLoginIndexRoute
+  '/_protectedLayout/mobile/settings/': typeof ProtectedLayoutMobileSettingsIndexRoute
   '/_protectedLayout/_transactionsLayout/transactions/list/': typeof ProtectedLayoutTransactionsLayoutTransactionsListIndexRoute
   '/_protectedLayout/_transactionsLayout/transactions/spendings/categories/': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsCategoriesIndexRoute
   '/_protectedLayout/_transactionsLayout/transactions/spendings/payees/': typeof ProtectedLayoutTransactionsLayoutTransactionsSpendingsPayeesIndexRoute
@@ -267,6 +288,7 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/payees'
     | '/login'
+    | '/mobile/settings'
     | '/transactions/list'
     | '/transactions/spendings/categories'
     | '/transactions/spendings/payees'
@@ -277,6 +299,7 @@ export interface FileRouteTypes {
     | '/accounts'
     | '/payees'
     | '/login'
+    | '/mobile/settings'
     | '/transactions/list'
     | '/transactions/spendings/categories'
     | '/transactions/spendings/payees'
@@ -289,6 +312,7 @@ export interface FileRouteTypes {
     | '/_protectedLayout/accounts/'
     | '/_protectedLayout/payees/'
     | '/_publicLayout/login/'
+    | '/_protectedLayout/mobile/settings/'
     | '/_protectedLayout/_transactionsLayout/transactions/list/'
     | '/_protectedLayout/_transactionsLayout/transactions/spendings/categories/'
     | '/_protectedLayout/_transactionsLayout/transactions/spendings/payees/'
@@ -325,7 +349,8 @@ export const routeTree = rootRoute
         "/_protectedLayout/_transactionsLayout",
         "/_protectedLayout/",
         "/_protectedLayout/accounts/",
-        "/_protectedLayout/payees/"
+        "/_protectedLayout/payees/",
+        "/_protectedLayout/mobile/settings/"
       ]
     },
     "/_publicLayout": {
@@ -358,6 +383,10 @@ export const routeTree = rootRoute
     "/_publicLayout/login/": {
       "filePath": "_publicLayout/login/index.tsx",
       "parent": "/_publicLayout"
+    },
+    "/_protectedLayout/mobile/settings/": {
+      "filePath": "_protectedLayout/mobile/settings/index.tsx",
+      "parent": "/_protectedLayout"
     },
     "/_protectedLayout/_transactionsLayout/transactions/list/": {
       "filePath": "_protectedLayout/_transactionsLayout/transactions/list/index.tsx",
