@@ -66,7 +66,7 @@ function RouteComponent() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CardHeader
               title={t.formatMessage({ id: "Auth.login.page.title" })}
-              subheader="Continue with Logicco"
+              subheader="Continue with Monovra"
             />
             <CardContent>
               <LoginFormFields form={form} />

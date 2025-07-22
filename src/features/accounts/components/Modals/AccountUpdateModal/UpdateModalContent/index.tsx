@@ -50,12 +50,6 @@ export function UpdateModalContent({
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({
-              id: "Accounts.notifications.updated",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getAccountsQueryKeys(),
           });

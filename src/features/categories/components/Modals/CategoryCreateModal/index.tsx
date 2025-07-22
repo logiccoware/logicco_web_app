@@ -39,13 +39,6 @@ export function CategoryCreateModal({ closeModal, category }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            autoHideDuration: 1500,
-            message: intl.formatMessage({
-              id: "Categories.notifications.created",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getCategoriesTreeViewQueryKey(),
           });

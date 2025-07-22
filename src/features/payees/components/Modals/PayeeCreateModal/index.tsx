@@ -36,10 +36,6 @@ export function PayeeCreateModal({ closeModal }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({ id: "Payees.notifications.created" }),
-          });
           queryClient.invalidateQueries({
             queryKey: getPayeesListQueryKeys(),
           });

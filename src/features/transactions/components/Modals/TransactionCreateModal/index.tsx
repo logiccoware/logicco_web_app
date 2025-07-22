@@ -63,12 +63,6 @@ export function TransactionCreateModal({ closeModal }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({
-              id: "Accounts.notifications.created",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getTransactionsQueryKeys(searchParams.month),
           });

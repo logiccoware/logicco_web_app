@@ -59,12 +59,6 @@ export function UpdateContent({ closeModal, transaction, account }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({
-              id: "Accounts.notifications.created",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getTransactionQueryKeys(transaction.id),
           });

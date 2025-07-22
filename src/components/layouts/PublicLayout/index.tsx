@@ -21,7 +21,7 @@ export function PublicLayout({ children }: PropsWithChildren) {
           >
             <Box
               component="a"
-              href="https://logicco.io"
+              href="/"
               sx={{ textDecoration: "none", color: "inherit" }}
             >
               <AppLogo />
@@ -32,7 +32,7 @@ export function PublicLayout({ children }: PropsWithChildren) {
       <Box
         component="main"
         sx={{
-          mt: 4
+          mt: 4,
         }}
       >
         {children}
