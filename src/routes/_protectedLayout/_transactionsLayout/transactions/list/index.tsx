@@ -121,6 +121,7 @@ function TransactionsListPage() {
                 isTransactionCreateModalOpen: undefined,
               }),
               replace: true,
+              resetScroll: false,
             });
           }}
         />
@@ -136,6 +137,7 @@ function TransactionsListPage() {
                 isTransactionCreateModalOpen: undefined,
                 duplicateTransactionId: undefined,
               }),
+              resetScroll: false,
               replace: true,
             });
           }}
@@ -149,6 +151,7 @@ function TransactionsListPage() {
                 transactionUpdateModalId: undefined,
               }),
               replace: true,
+              resetScroll: false,
             });
           }}
           transactionId={searchParams.transactionUpdateModalId}
@@ -162,6 +165,7 @@ function TransactionsListPage() {
                 transactionDeleteModalId: undefined,
               }),
               replace: true,
+              resetScroll: false,
             });
           }}
           transactionId={searchParams.transactionDeleteModalId}
