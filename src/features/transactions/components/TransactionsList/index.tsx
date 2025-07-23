@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 
 interface IProps {
   data: ITransactionsGroupByDate[];
+  handleDuplicateClick: (id: string) => void;
   handleItemClick: (id: string) => void;
   handleDeleteClick: (id: string) => void;
 }
@@ -20,6 +21,7 @@ const CardContentNoPadding = styled(CardContent)(`
 export function TransactionsList({
   data,
   handleItemClick,
+  handleDuplicateClick,
   handleDeleteClick,
 }: IProps) {
   return (
@@ -28,6 +30,7 @@ export function TransactionsList({
         <TransactionListItem
           data={data}
           emptyListMessage="No data found"
+          handleDuplicateClick={handleDuplicateClick}
           handleItemClick={handleItemClick}
           handleDeleteClick={handleDeleteClick}
         />

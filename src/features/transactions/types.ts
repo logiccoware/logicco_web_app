@@ -18,3 +18,11 @@ export interface ITransactionPayload {
 
 export interface ITransactionCreatePayload extends ITransactionPayload {}
 export interface ITransactionUpdatePayload extends ITransactionPayload {}
+
+export interface ITransactionCreatePrefilledValues {
+  amount?: string;
+  payeeId?: string;
+  categoryId?: string;
+  type?: TTransactionType;
+  note?: string;
+}

@@ -27,6 +27,7 @@ import { useDisclosure } from "@/lib/hooks/useDisclosure";
 
 interface IProps {
   closeModal: () => void;
+  defaultSelectedCategoryId?: string | null;
   mode?:
     | {
         type: "manage";

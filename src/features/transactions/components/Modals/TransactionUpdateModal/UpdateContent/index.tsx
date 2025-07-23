@@ -36,6 +36,7 @@ export function UpdateContent({ closeModal, transaction, account }: IProps) {
       payeeId: transaction.payee.id,
       type: transaction.type,
     },
+    values: null,
   });
 
   const intl = useIntl();

@@ -5,12 +5,13 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import Box from "@mui/material/Box";
 import { z } from "zod";
-import { TransactionCreateModal } from "@/features/transactions/components/Modals/TransactionCreateModal";
+import { TransactionCreateDialog } from "@/features/transactions/components/Dialogs/TransactionCreateDialog";
 import { getGroupedTransactionsByDate } from "@/features/transactions/helpers/getGroupedTransactionsByDate";
 import { TransactionUpdateModal } from "@/features/transactions/components/Modals/TransactionUpdateModal";
 import { TransactionDeleteModal } from "@/features/transactions/components/Modals/TransactionDeleteModal";
 import { TransactionDateSwitcher } from "@/features/transactions/components/TransactionDateSwitcher";
 import { useMonthSwitcher } from "@/lib/hooks/useMonthSwitcher";
+import { TransactionCreateDuplicateDialog } from "@/features/transactions/components/Dialogs/TransactionCreateDuplicateDialog";
 
 export const Route = createFileRoute(
   "/_protectedLayout/_transactionsLayout/transactions/list/"
@@ -18,6 +19,7 @@ export const Route = createFileRoute(
   component: TransactionsListPage,
   validateSearch: z.object({
     isTransactionCreateModalOpen: z.boolean().optional(),
+    duplicateTransactionId: z.string().optional(),
     transactionUpdateModalId: z.string().optional(),
     transactionDeleteModalId: z.string().optional(),
   }),
@@ -49,6 +51,7 @@ function TransactionsListPage() {
   const { getMonth, monthLabel } = useMonthSwitcher({
     monthQueryParam: searchParams.month,
   });
+
   return (
     <Box sx={{ mt: 4 }}>
       <TransactionDateSwitcher
@@ -79,6 +82,15 @@ function TransactionsListPage() {
               replace: true,
             });
           }}
+          handleDuplicateClick={(id) => {
+            navigate({
+              search: () => ({
+                isTransactionCreateModalOpen: true,
+                duplicateTransactionId: id,
+              }),
+              replace: true,
+            });
+          }}
           handleItemClick={(id) => {
             navigate({
               search: () => ({
@@ -102,11 +114,27 @@ function TransactionsListPage() {
         />
       ) : null}
       {data?.account && searchParams.isTransactionCreateModalOpen ? (
-        <TransactionCreateModal
+        <TransactionCreateDialog
           closeModal={() => {
             navigate({
               search: () => ({
                 isTransactionCreateModalOpen: undefined,
+              }),
+              replace: true,
+            });
+          }}
+        />
+      ) : null}
+      {data?.account &&
+      searchParams.isTransactionCreateModalOpen &&
+      searchParams.duplicateTransactionId ? (
+        <TransactionCreateDuplicateDialog
+          transactionId={searchParams.duplicateTransactionId}
+          closeModal={() => {
+            navigate({
+              search: () => ({
+                isTransactionCreateModalOpen: undefined,
+                duplicateTransactionId: undefined,
               }),
               replace: true,
             });

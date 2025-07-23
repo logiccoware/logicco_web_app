@@ -1,4 +1,3 @@
-import { DataListItemMenu } from "@/components/ui/EntityDataList/DataListItemMenu";
 import { DataListEmpty } from "@/components/ui/EntityDataList/DataListEmpty";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
@@ -10,10 +9,12 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { ListMenu } from "@/features/transactions/components/TransactionsList/ListMenu";
 
 interface IProps {
   data: ITransactionsGroupByDate[];
   handleItemClick: (id: string) => void;
+  handleDuplicateClick: (id: string) => void;
   handleDeleteClick: (id: string) => void;
   emptyListMessage: string;
 }
@@ -21,6 +22,7 @@ interface IProps {
 export function TransactionListItem({
   data,
   emptyListMessage,
+  handleDuplicateClick,
   handleDeleteClick,
   handleItemClick,
 }: IProps) {
@@ -39,7 +41,8 @@ export function TransactionListItem({
         <ListItem
           key={item.id}
           secondaryAction={
-            <DataListItemMenu
+            <ListMenu
+              handleDuplicateClick={() => handleDuplicateClick(item.id)}
               handleDeleteClick={() => handleDeleteClick(item.id)}
             />
           }
