@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
