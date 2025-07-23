@@ -14,12 +14,15 @@ import TextField from "@mui/material/TextField";
 import { NumericFormat } from "react-number-format";
 import { PayeeSelectField } from "@/features/transactions/components/Form/PayeeSelectField";
 import { CategorySelectField } from "@/features/transactions/components/Form/CategorySelectField";
+import { useGetLatestCategoryByPayeeMutation } from "@/features/transactions/api/mutations/hooks/useGetLatestCategoryByPayeeMutation";
 
 interface IProps {
   form: UseFormReturn<TTransactionFormFields>;
 }
 
 export function TransactionFormFields({ form }: IProps) {
+  const getLatestCategoryByPayeeMutation =
+    useGetLatestCategoryByPayeeMutation();
   return (
     <Stack gap={2}>
       <input type="hidden" {...form.register("accountId")} />
@@ -70,7 +73,28 @@ export function TransactionFormFields({ form }: IProps) {
           </FormControl>
         )}
       />
-      <PayeeSelectField form={form} />
+      <PayeeSelectField
+        form={form}
+        onPayeeChange={(payeeId) => {
+          const accountId = form.getValues("accountId");
+          const currentCategoryId = form.getValues("categoryId");
+          if (accountId && !currentCategoryId && payeeId) {
+            getLatestCategoryByPayeeMutation.mutate(
+              {
+                payeeId,
+                accountId,
+              },
+              {
+                onSuccess: (categoryId) => {
+                  if (categoryId) {
+                    form.setValue("categoryId", categoryId);
+                  }
+                },
+              }
+            );
+          }
+        }}
+      />
       <CategorySelectField form={form} />
       <Controller
         name="type"

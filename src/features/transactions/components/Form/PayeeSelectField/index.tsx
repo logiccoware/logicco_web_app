@@ -17,9 +17,10 @@ import { PayeeSelectModal } from "@/features/payees/components/Modals/PayeeSelec
 
 interface IProps {
   form: UseFormReturn<TTransactionFormFields>;
+  onPayeeChange: (payeeId: string | null) => void;
 }
 
-export function PayeeSelectField({ form }: IProps) {
+export function PayeeSelectField({ form, onPayeeChange }: IProps) {
   const query = useQuery(payeesListQueryOptions);
   const [isPayeeSelectModalOpen, { open, close }] = useDisclosure();
 
@@ -91,6 +92,7 @@ export function PayeeSelectField({ form }: IProps) {
             <PayeeSelectModal
               closeModal={close}
               handleOnSelectPayee={(payee) => {
+                onPayeeChange(payee?.id ?? null);
                 field.onChange(payee?.id ?? null);
               }}
               defaultSelectedPayee={selectedPayee}
