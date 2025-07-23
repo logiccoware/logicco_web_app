@@ -6,7 +6,7 @@ export function AppLogo() {
   return (
     <Stack direction="row">
       <AppLogoSvg />
-      <Typography variant="h5">Logicco</Typography>
+      <Typography variant="h5">Monovra</Typography>
     </Stack>
   );
 }

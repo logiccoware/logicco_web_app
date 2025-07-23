@@ -27,13 +27,6 @@ export function CategoryDeleteModal({
       {
         onSuccess: () => {
           resetSelectedCategory();
-          enqueueSnackbar({
-            variant: "success",
-            autoHideDuration: 1500,
-            message: intl.formatMessage({
-              id: "Categories.notifications.deleted",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getCategoriesTreeViewQueryKey(),
           });

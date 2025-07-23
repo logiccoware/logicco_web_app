@@ -39,13 +39,6 @@ export function CategoryUpdateModal({ closeModal, category }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-             autoHideDuration: 1500,
-            message: intl.formatMessage({
-              id: "Categories.notifications.updated",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getCategoriesTreeViewQueryKey(),
           });
@@ -54,7 +47,7 @@ export function CategoryUpdateModal({ closeModal, category }: IProps) {
         onError: () => {
           enqueueSnackbar({
             variant: "error",
-             autoHideDuration: 1500,
+            autoHideDuration: 1500,
             message: intl.formatMessage({
               id: DEFAULT_SNACKBAR_ERROR_MESSAGE_ID,
             }),

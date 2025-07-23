@@ -41,10 +41,6 @@ export function UpdateModalContent({ closeModal, payee }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({ id: "Payees.notifications.updated" }),
-          });
           queryClient.invalidateQueries({
             queryKey: getPayeesListQueryKeys(),
           });

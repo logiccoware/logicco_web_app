@@ -27,10 +27,6 @@ export function AccountDeleteModal({
       { accountId },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({ id: "Accounts.notifications.deleted" }),
-          });
           queryClient.invalidateQueries({
             queryKey: getAccountsQueryKeys(),
           });

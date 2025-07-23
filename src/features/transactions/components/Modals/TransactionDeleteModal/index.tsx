@@ -24,12 +24,6 @@ export function TransactionDeleteModal({ closeModal, transactionId }: IProps) {
       { transactionId },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({
-              id: "Transactions.notifications.deleted",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getTransactionsQueryKeys(searchParams.month),
           });

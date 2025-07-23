@@ -66,6 +66,17 @@ export function CategorySelectField({ form }: IProps) {
     return null;
   }
 
+  function displayLabel(
+    selectedCategory: ISelectedCategory | null
+  ): string | null {
+    if (!selectedCategory) {
+      return null;
+    }
+    return selectedCategory.parent
+      ? `${selectedCategory.parent.name}:${selectedCategory.name}`
+      : selectedCategory.name;
+  }
+
   if (query.isLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
@@ -91,12 +102,14 @@ export function CategorySelectField({ form }: IProps) {
         control={form.control}
         render={({ field }) => (
           <FormControl error={Boolean(form.formState.errors.payeeId)}>
-            <Typography variant="subtitle1" >
+            <Typography variant="subtitle1">
               <FormattedMessage id="Transactions.form.fields.category.label" />
             </Typography>
             <Chip
               label={
-                getSelectedCategory(field.value, query.data ?? [])?.name ?? (
+                displayLabel(
+                  getSelectedCategory(field.value, query.data ?? [])
+                ) ?? (
                   <FormattedMessage id="Transactions.form.fields.category.placeholder" />
                 )
               }

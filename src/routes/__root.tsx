@@ -18,7 +18,7 @@ export const Route = createRootRouteWithContext<AppRouterContext>()({
           "Manage your finances effectively with this personal financial management app.",
       },
       {
-        title: "Logicco - Finances",
+        title: "Monovra - Finances",
       },
       {
         name: "keywords",

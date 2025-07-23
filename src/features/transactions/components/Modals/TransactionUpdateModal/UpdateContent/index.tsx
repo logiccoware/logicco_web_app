@@ -36,6 +36,7 @@ export function UpdateContent({ closeModal, transaction, account }: IProps) {
       payeeId: transaction.payee.id,
       type: transaction.type,
     },
+    values: null,
   });
 
   const intl = useIntl();
@@ -59,12 +60,6 @@ export function UpdateContent({ closeModal, transaction, account }: IProps) {
       },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({
-              id: "Accounts.notifications.created",
-            }),
-          });
           queryClient.invalidateQueries({
             queryKey: getTransactionQueryKeys(transaction.id),
           });

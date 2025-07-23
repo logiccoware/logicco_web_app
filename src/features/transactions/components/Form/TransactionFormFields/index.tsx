@@ -103,9 +103,6 @@ export function TransactionFormFields({ form }: IProps) {
         control={form.control}
         render={({ field }) => (
           <FormControl fullWidth>
-            <InputLabel>
-              <FormattedMessage id="Transactions.form.fields.note.label" />
-            </InputLabel>
             <TextField
               onChange={field.onChange}
               value={field.value}

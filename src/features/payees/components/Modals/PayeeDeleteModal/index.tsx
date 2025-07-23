@@ -27,10 +27,6 @@ export function PayeeDeleteModal({
       { payeeId },
       {
         onSuccess: () => {
-          enqueueSnackbar({
-            variant: "success",
-            message: intl.formatMessage({ id: "Payees.notifications.deleted" }),
-          });
           queryClient.invalidateQueries({
             queryKey: getPayeesListQueryKeys(),
           });
