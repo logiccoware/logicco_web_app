@@ -290,4 +290,26 @@ export class TransactionApiService {
       );
     }
   }
+
+  async getLatestUsedCategoryIdByPayeeId(
+    payeeId: string,
+    accountId: string
+  ): Promise<string | null> {
+    const user = await getUserOrFail();
+    const { data } = await this.supabase
+      .from("transactions")
+      .select(
+        `
+      category_id
+    `
+      )
+      .eq("account_id", accountId)
+      .eq("payee_id", payeeId)
+      .eq("user_id", user.id)
+      .order("date", { ascending: false })
+      .limit(1)
+      .single();
+
+    return data?.category_id ?? null;
+  }
 }
